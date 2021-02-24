@@ -1,25 +1,24 @@
-import requests
-import datetime
+import websocket
+from os import getenv
 
-req = requests.get('https://finnhub.io/api/v1/crypto/candle?symbol=BINANCE:BTCUSDT&resolution=D&from=1611967991&to=1612967991&token=c0htplv48v6qgpegtbk0')
-req = req.json()
-#print(req)
+def on_message(ws, message):
+    print(message)
 
-data_list = []
-len = [len(v) for v in req.values()]
-for i in range(len[0]):
-       temp_list = []
-       data_list.append(temp_list)
-       for k, v in req.items():
-              if k == 't':
-                     temp_list.append(
-                            datetime.datetime.fromtimestamp(
-                                   v[i]).strftime('%Y-%m-%d %H:%M:%S')
-                     )
-              elif k == 'c':
-                     temp_list.append('price ' + str(v[i]))
-              elif k == 'v':
-                     temp_list.append('volume ' + str(v[i]))
+def on_error(ws, error):
+    print(error)
 
-for item in data_list:
-       print(item)
+def on_close(ws):
+    print("### closed ###")
+
+def on_open(ws):
+    ws.send('{"type":"subscribe","symbol":"BINANCE:BTCUSDT"}')
+
+if __name__ == "__main__":
+    token = getenv("TOKEN", "c0htplv48v6qgpegtbk0")
+    websocket.enableTrace(True)
+    ws = websocket.WebSocketApp(f"wss://ws.finnhub.io?token={token}",
+                                 on_message = on_message,
+                                 on_error = on_error,
+                                 on_close = on_close)
+    ws.on_open = on_open
+    ws.run_forever()
