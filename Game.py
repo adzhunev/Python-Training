@@ -11,16 +11,16 @@ class Character():
         self.life_points = life_points
         self.level = level
 
-    def moveRight(self, x):
+    def move_right(self, x):
         return x + 1
 
-    def moveLeft(self, x):
+    def move_left(self, x):
         return x - 1
 
-    def moveUp(self, y):
+    def move_up(self, y):
         return y + 1
 
-    def moveDown(self, y):
+    def move_down(self, y):
         return y - 1
 
     def attack(self):
@@ -28,7 +28,7 @@ class Character():
 
         return damage
 
-    def calculateLife(self, life_points, damage):
+    def calculate_life(self, life_points, damage):
         return life_points - damage
 
 class Hero(Character):
@@ -42,7 +42,7 @@ class Hero(Character):
     def defend(self, damage):
         return damage - random.randint(0, damage)
 
-    def collectItem(self, items: list, new_item: str):
+    def collect_item(self, items: list, new_item: str):
         items.append(new_item)
 
 class Monster(Character):
@@ -55,7 +55,7 @@ class Monster(Character):
 
         return x, y
 
-    def dropItem(self):
+    def drop_item(self):
         items = ["sword", "staff", "ring", "helm", "chest"]
 
         return random.choice(items)
@@ -78,10 +78,10 @@ class Level(Hero):
         self.current_level = current_level
         self.experience = experience
 
-    def gainExp(self, experience):
+    def gain_exp(self, experience):
         return experience + random.randint(0, 1000)
 
-    def levelUp(self, experience, current_level):
+    def level_up(self, experience, current_level):
         if experience > 10000:
             return current_level + 1
 
@@ -100,8 +100,8 @@ class MapLevel(Map):
         self.current_level = current_level
         self.last_level = last_level
 
-    def levelStart(self):
+    def level_start(self):
         print("Level start")
 
-    def levelEnd(self):
+    def level_end(self):
         print("Level end")
