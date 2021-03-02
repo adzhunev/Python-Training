@@ -1,6 +1,6 @@
 import random
 
-class Character():
+class Character:
     # character types: warrior, mage, wizard, knight
     #x and y are cordinates where the character is on the map
 
@@ -85,7 +85,7 @@ class Level(Hero):
         if experience > 10000:
             return current_level + 1
 
-class Item():
+class Item:
     # item types ex: weapon, armor, special items
 
     def __init__(self, item_type):
